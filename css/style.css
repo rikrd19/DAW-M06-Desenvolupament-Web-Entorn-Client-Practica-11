@@ -1,0 +1,75 @@
+/* Estilos generales */
+body {
+    transition: background 0.5s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tablero de Tres en Raya */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.game-cell {
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    background-color: #f8f9fa; /* Bootstrap logic-like */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.game-cell:hover {
+    transform: scale(1.05);
+    background-color: #e9ecef;
+}
+
+/* Estilos diferenciados por jugador */
+.cell-x {
+    color: #0d6efd; /* Bootstrap Primary Blue */
+    background-color: #cfe2ff !important;
+}
+
+.cell-o {
+    color: #dc3545; /* Bootstrap Danger Red */
+    background-color: #f8d7da !important;
+}
+
+/* Celdas ganadoras */
+.winning-cell {
+    animation: glow 1s infinite alternate;
+    border-color: #ffc107 !important; /* Warning Yellow */
+    box-shadow: 0 0 15px #ffc107;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px #ffc107;
+    }
+    to {
+        box-shadow: 0 0 20px #ffc107, 0 0 10px #ffc107;
+    }
+}
+
+/* Animación de entrada */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ajustes para el textarea */
+textarea {
+    resize: none;
+}
