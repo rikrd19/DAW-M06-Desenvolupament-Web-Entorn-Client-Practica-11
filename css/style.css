@@ -1,75 +1,265 @@
-/* Estilos generales */
-body {
-    transition: background 0.5s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* =========================================
+   TEMA NEON DARK - VARIABLES & GENERAL
+   ========================================= */
+   :root {
+    --neon-blue: #00f3ff;
+    --neon-red: #ff0055;
+    --neon-green: #00ff9d;
+    --dark-bg: #0a0a12;
+    --dark-surface: #161625;
+    --font-gaming: 'Orbitron', sans-serif;
+    --font-body: 'Roboto', sans-serif;
 }
 
-/* Tablero de Tres en Raya */
+body.neon-theme-bg {
+    background-color: var(--dark-bg) !important;
+    color: #e0e0e0;
+    font-family: var(--font-body);
+    /* Fondo con patrón de rejilla sutil */
+    background-image: 
+        linear-gradient(rgba(10, 10, 18, 0.93), rgba(10, 10, 18, 0.93)),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231c1c2e' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+}
+
+/* Tipografías y Utilidades Neon */
+.orbitron-font { font-family: var(--font-gaming); letter-spacing: 1px; }
+.text-x-neon { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+.text-o-neon { color: var(--neon-red); text-shadow: 0 0 15px var(--neon-red); }
+
+/* =========================================
+   LANDING PAGE (PANTALLA DE INICIO)
+   ========================================= */
+#landing-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--dark-bg);
+    z-index: 9999;
+    flex-direction: column;
+}
+
+.game-title {
+    font-family: var(--font-gaming);
+    color: #fff;
+    letter-spacing: 5px;
+    text-shadow: 3px 3px 0px var(--neon-blue), -3px -3px 0px var(--neon-red);
+    margin-bottom: 2rem;
+}
+
+/* Botón Start Estilo Cyberpunk */
+.btn-neon-start {
+    background: transparent;
+    color: #fff;
+    border: 2px solid var(--neon-blue);
+    font-family: var(--font-gaming);
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+.btn-neon-start:hover {
+    background: var(--neon-blue);
+    color: var(--dark-bg);
+    box-shadow: 0 0 40px var(--neon-blue);
+    transform: scale(1.05);
+}
+
+/* Decoración de fondo en landing */
+.grid-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0, 243, 255, 0.1), transparent);
+    clip-path: polygon(0 100%, 100% 100%, 80% 0, 20% 0);
+    z-index: -1;
+}
+
+/* Animación de entrada */
+.fade-in-up { animation: fadeInUp 1s ease-out; }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   COMPONENTES UI (Glassmorphism)
+   ========================================= */
+.card {
+    background-color: var(--dark-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.bg-dark-glass {
+    background: rgba(22, 22, 37, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.border-bottom-neon { border-bottom: 2px solid var(--neon-blue) !important; }
+
+/* Inputs y Textareas */
+.form-control {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border-color: rgba(255,255,255,0.1);
+    color: #00ff9d !important;
+    font-family: monospace;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 255, 157, 0.2);
+    border-color: var(--neon-green);
+}
+
+/* =========================================
+   TABLERO DE JUEGO (GAME BOARD)
+   ========================================= */
 #game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
-    width: 300px;
-    height: 300px;
+    gap: 15px;
+    width: 340px;
+    height: 340px;
     margin: 0 auto;
+    padding: 15px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
 }
 
 .game-cell {
     width: 100%;
     height: 100%;
-    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-gaming);
+    font-size: 2.8rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 10px;
-    background-color: #f8f9fa; /* Bootstrap logic-like */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    background-color: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
 .game-cell:hover {
-    transform: scale(1.05);
-    background-color: #e9ecef;
+    transform: translateY(-3px);
+    background-color: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
-/* Estilos diferenciados por jugador */
+/* Estilos de las fichas */
 .cell-x {
-    color: #0d6efd; /* Bootstrap Primary Blue */
-    background-color: #cfe2ff !important;
+    color: var(--neon-blue);
+    text-shadow: 0 0 20px var(--neon-blue);
+    background-color: rgba(0, 243, 255, 0.05);
+    border-color: rgba(0, 243, 255, 0.3);
 }
 
 .cell-o {
-    color: #dc3545; /* Bootstrap Danger Red */
-    background-color: #f8d7da !important;
+    color: var(--neon-red);
+    text-shadow: 0 0 20px var(--neon-red);
+    background-color: rgba(255, 0, 85, 0.05);
+    border-color: rgba(255, 0, 85, 0.3);
 }
 
-/* Celdas ganadoras */
+/* Animación de victoria */
 .winning-cell {
-    animation: glow 1s infinite alternate;
-    border-color: #ffc107 !important; /* Warning Yellow */
-    box-shadow: 0 0 15px #ffc107;
+    animation: neonPulse 0.8s infinite alternate;
+    background-color: rgba(255,255,255,0.1) !important;
+    z-index: 10;
 }
 
-@keyframes glow {
-    from {
-        box-shadow: 0 0 10px #ffc107;
-    }
-    to {
-        box-shadow: 0 0 20px #ffc107, 0 0 10px #ffc107;
-    }
+@keyframes neonPulse {
+    from { box-shadow: 0 0 10px #fff, 0 0 20px var(--neon-blue); }
+    to { box-shadow: 0 0 20px #fff, 0 0 40px var(--neon-red); }
 }
 
-/* Animación de entrada */
+/* Animación Fade In general */
 .fade-in {
-    animation: fadeIn 0.5s ease-in;
+    animation: fadeIn 0.8s ease-in-out;
 }
-
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Ajustes para el textarea */
-textarea {
-    resize: none;
+/* =========================================
+   CORRECCIÓN DE TEXTOS (VISIBILIDAD)
+   ========================================= */
+
+/* Forzar que todos los títulos sean blanco puro */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #ffffff !important;
+}
+
+/* Hacer que el texto secundario (gris oscuro en Bootstrap) sea gris claro */
+.text-secondary {
+    color: #cccccc !important;
+}
+
+/* Hacer que el texto 'muted' sea legible */
+.text-muted {
+    color: #a0a0a0 !important;
+}
+
+/* El texto general del cuerpo */
+body, p, .card-text {
+    color: #e0e0e0;
+}
+
+/* Asegurar que los inputs se vean bien */
+textarea.form-control {
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+textarea::placeholder {
+    color: #bbb !important;
+}
+
+/* =========================================
+   ESTILO DEL BLOQUE DE MISIÓN (ALERT)
+   ========================================= */
+.alert-mission {
+    background-color: rgba(0, 243, 255, 0.05) !important; /* Fondo azul casi transparente */
+    border: 1px solid var(--neon-blue) !important;       /* Borde Neón Azul */
+    color: #fff !important;                              /* Texto Blanco */
+    box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.1);   /* Brillo interior */
+    backdrop-filter: blur(5px);
+}
+
+.alert-mission .alert-heading {
+    color: var(--neon-blue) !important;
+    text-shadow: 0 0 5px var(--neon-blue);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.alert-mission strong {
+    color: var(--neon-green); /* Destacar la tecla 'R' en verde */
+    font-size: 1.1em;
+}
+
+/* Pequeña animación para el icono de info */
+.alert-mission .fa-info-circle {
+    animation: pulseIcon 2s infinite;
+}
+
+@keyframes pulseIcon {
+    0% { text-shadow: 0 0 5px var(--neon-blue); }
+    50% { text-shadow: 0 0 20px var(--neon-blue); }
+    100% { text-shadow: 0 0 5px var(--neon-blue); }
 }
